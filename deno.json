@@ -1,0 +1,10 @@
+{
+    "imports": {
+        "@std/dotenv": "jsr:@std/dotenv@^0.224.2",
+        "@mtcute/deno": "jsr:@mtcute/deno@^0.15.0",
+        "@mtcute/dispatcher": "jsr:@mtcute/dispatcher@^0.15.2"
+    },
+    "tasks": {
+        "start": "deno run -A --unstable-ffi ./src/main.ts"
+    }
+}
