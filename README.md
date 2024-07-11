@@ -1,6 +1,6 @@
 # pcre-sub-bot
 
-mtcute powered Telegram bot
+PCRE2 powered substitution bot for Telegram
 
 ## Development
 
