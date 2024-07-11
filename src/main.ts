@@ -1,8 +1,8 @@
-import { Dispatcher, filters } from '@mtcute/dispatcher'
-import { TelegramClient } from '@mtcute/deno'
+import { CallbackDataBuilder, Dispatcher, filters } from '@mtcute/dispatcher'
+import { BotKeyboard, TelegramClient } from '@mtcute/deno'
 
-import { compile, free, substitute } from "./bindings.ts";
-import { findExpressionsInMessage } from "./expression.ts";
+import { compile, free, substitute } from './bindings.ts'
+import { findExpressionsInMessage, processExpressions } from './expression.ts'
 import * as env from './env.ts'
 
 const tg = new TelegramClient({
@@ -12,6 +12,7 @@ const tg = new TelegramClient({
 })
 
 const dp = Dispatcher.for(tg)
+const DeleteError = new CallbackDataBuilder('del', 'userId')
 
 dp.onNewMessage(filters.reply, async (msg) => {
     const exprs = findExpressionsInMessage(msg.text)
@@ -22,27 +23,36 @@ dp.onNewMessage(filters.reply, async (msg) => {
     const repliedMsg = await msg.getReplyTo()
     if (!repliedMsg || !repliedMsg.text) return
 
-    let text = repliedMsg.text
-    for (const expr of exprs) {
-        let compiled
-        try {
-            compiled = compile(expr.pattern, expr.flags)
-        } catch (e) {
-            await msg.replyText(`Failed to compile expression ${expr.pattern}\n\n${e.message}`)
-            return
-        }
+    let newText
+    try {
+        newText = processExpressions(repliedMsg.text, exprs)
+    } catch (e) {
+        await msg.replyText(e.message, {
+            replyMarkup: BotKeyboard.inline([
+                [
+                    BotKeyboard.callback(
+                        '❌ Delete',
+                        DeleteError.build({
+                            userId: String(msg.sender.id),
+                        }),
+                    ),
+                ],
+            ]),
+        })
 
-        try {
-            text = substitute(compiled, text, expr.replacement, expr.global)
-        } catch (e) {
-            await msg.replyText(`Failed to substitute expression ${expr.pattern}\n\n${e.message}`)
-            return
-        }
-        
-        free(compiled)
+        return
     }
 
-    await tg.replyText(repliedMsg, text)
+    await tg.replyText(repliedMsg, newText)
+})
+
+dp.onCallbackQuery(DeleteError.filter(), async (upd) => {
+    const { userId } = upd.match
+    if (upd.user.id !== Number(userId)) {
+        return
+    }
+
+    await tg.deleteMessagesById(upd.chat, [upd.messageId])
 })
 
 const user = await tg.start({ botToken: env.BOT_TOKEN })

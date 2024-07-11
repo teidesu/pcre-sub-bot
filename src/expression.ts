@@ -1,3 +1,5 @@
+import { compile, free, substitute } from './bindings.ts'
+
 interface Expression {
     pattern: string
     replacement: string
@@ -5,7 +7,11 @@ interface Expression {
     flags?: string
 }
 
-export function splitWithEscape(str: string, separator: string, esc = '\\'): string[] {
+export function splitWithEscape(
+    str: string,
+    separator: string,
+    esc = '\\',
+): string[] {
     const parts: string[] = []
     let current = ''
     let escaped = false
@@ -39,7 +45,7 @@ export function parseExpression(expr: string): Expression | null {
         flags = undefined
     } else if (parts.length === 4) {
         flags = parts[3]
-        
+
         const gIdx = flags.indexOf('g')
         if (gIdx !== -1) {
             global = true
@@ -49,12 +55,12 @@ export function parseExpression(expr: string): Expression | null {
         return null
     }
 
-   return {
+    return {
         pattern: parts[1],
         replacement: parts[2],
         global,
-        flags
-   }
+        flags,
+    }
 }
 
 export function findExpressionsInMessage(message: string): Expression[] {
@@ -64,7 +70,7 @@ export function findExpressionsInMessage(message: string): Expression[] {
     lines.forEach((line) => {
         if (line.startsWith('s/')) {
             const expr = parseExpression(line)
-            
+
             if (expr) {
                 expressions.push(expr)
             }
@@ -72,4 +78,40 @@ export function findExpressionsInMessage(message: string): Expression[] {
     })
 
     return expressions
+}
+
+export class ExpressionError extends Error {
+    constructor(
+        expr: Expression,
+        when: 'compile' | 'substitute',
+        message: string,
+    ) {
+        super(`Failed to ${when} expression ${expr.pattern}\n\n${message}`)
+    }
+}
+
+export function processExpressions(
+    text: string,
+    expressions: Expression[],
+): string {
+    let newText = text
+    for (const expr of expressions) {
+        let compiled
+        try {
+            compiled = compile(expr.pattern, expr.flags)
+        } catch (e) {
+            throw new ExpressionError(expr, 'compile', e.message)
+        }
+
+        try {
+            newText = substitute(compiled, text, expr.replacement, expr.global)
+        } catch (e) {
+            free(compiled)
+            throw new ExpressionError(expr, 'substitute', e.message)
+        }
+
+        free(compiled)
+    }
+
+    return newText
 }
