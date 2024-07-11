@@ -6,7 +6,19 @@ const library = Deno.dlopen(PCRE2_LIB, {
         result: 'pointer',
     },
     pcre2_substitute_8: {
-        parameters: ['pointer', 'buffer', 'u32', 'u32', 'u32', 'pointer', 'pointer', 'buffer', 'u32', 'buffer', 'pointer'],
+        parameters: [
+            'pointer',
+            'buffer',
+            'u32',
+            'u32',
+            'u32',
+            'pointer',
+            'pointer',
+            'buffer',
+            'u32',
+            'buffer',
+            'pointer',
+        ],
         result: 'i32',
     },
     pcre2_code_free_8: {
@@ -280,11 +292,15 @@ export function compile(pattern: string, options?: string): Deno.PointerValue {
     )
 
     if (!code) {
-        throw new Error(`PCRE2 error: ${PCRE2_ERRORS[lastErr[0]] || lastErr[0]}`)
+        throw new Error(
+            `PCRE2 error: ${PCRE2_ERRORS[lastErr[0]] || lastErr[0]}`,
+        )
     }
 
     return code
 }
+
+const DEFAULT_RESULT_BUF = new Uint8Array(1024)
 
 export function substitute(
     code: Deno.PointerValue,
@@ -295,10 +311,14 @@ export function substitute(
     const subjectBuf = new TextEncoder().encode(subject)
     const replacementBuf = new TextEncoder().encode(replacement)
 
-    let resultBuf = new Uint8Array(subjectBuf.byteLength >> 1)
+    let resultBuf = DEFAULT_RESULT_BUF
 
-    const flags = PCRE2_SUBSTITUTE_EXTENDED | PCRE2_SUBSTITUTE_OVERFLOW_LENGTH | (global ? PCRE2_SUBSTITUTE_GLOBAL : 0)
+    const flags =
+        PCRE2_SUBSTITUTE_EXTENDED |
+        PCRE2_SUBSTITUTE_OVERFLOW_LENGTH |
+        (global ? PCRE2_SUBSTITUTE_GLOBAL : 0)
 
+    outLen[0] = resultBuf.byteLength
     let res = library.symbols.pcre2_substitute_8(
         code,
         subjectBuf,
@@ -334,7 +354,7 @@ export function substitute(
         throw new Error(`PCRE2 error: ${PCRE2_ERRORS[res] || res}`)
     }
 
-    return new TextDecoder().decode(resultBuf)
+    return new TextDecoder().decode(resultBuf.slice(0, outLen[0]))
 }
 
 export function free(code: Deno.PointerValue): void {
