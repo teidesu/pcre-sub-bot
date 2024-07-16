@@ -1,7 +1,6 @@
 import { CallbackDataBuilder, Dispatcher, filters } from '@mtcute/dispatcher'
 import { BotKeyboard, TelegramClient } from '@mtcute/deno'
 
-import { compile, free, substitute } from './bindings.ts'
 import { findExpressionsInMessage, processExpressions } from './expression.ts'
 import * as env from './env.ts'
 
@@ -9,6 +8,9 @@ const tg = new TelegramClient({
     apiId: env.API_ID,
     apiHash: env.API_HASH,
     storage: 'bot-data/session',
+    updates: {
+        catchUp: true,
+    }
 })
 
 const dp = Dispatcher.for(tg)
