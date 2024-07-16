@@ -9,13 +9,13 @@ const library = Deno.dlopen(PCRE2_LIB, {
         parameters: [
             'pointer',
             'buffer',
-            'u32',
-            'u32',
+            'usize',
+            'usize',
             'u32',
             'pointer',
             'pointer',
             'buffer',
-            'u32',
+            'usize',
             'buffer',
             'pointer',
         ],
@@ -248,9 +248,9 @@ const PCRE2_ERRORS = {
 
 const lastErr = new Uint32Array(1)
 const lastErrPtr = Deno.UnsafePointer.of(lastErr)
-const lastErrOffset = new Uint32Array(1)
+const lastErrOffset = new BigUint64Array(1)
 const lastErrOffsetPtr = Deno.UnsafePointer.of(lastErrOffset)
-const outLen = new Uint32Array(1)
+const outLen = new BigUint64Array(1)
 const outLenPtr = Deno.UnsafePointer.of(outLen)
 
 export function compile(pattern: string, options?: string): Deno.PointerValue {
@@ -318,33 +318,33 @@ export function substitute(
         PCRE2_SUBSTITUTE_OVERFLOW_LENGTH |
         (global ? PCRE2_SUBSTITUTE_GLOBAL : 0)
 
-    outLen[0] = resultBuf.byteLength
+    outLen[0] = BigInt(resultBuf.byteLength)
     let res = library.symbols.pcre2_substitute_8(
         code,
         subjectBuf,
-        subjectBuf.byteLength,
-        0,
+        BigInt(subjectBuf.byteLength),
+        0n,
         flags,
         null,
         null,
         replacementBuf,
-        replacementBuf.byteLength,
+        BigInt(replacementBuf.byteLength),
         resultBuf,
         outLenPtr,
     )
 
     if (res === -48 /* PCRE2_ERROR_NOMEMORY */) {
-        resultBuf = new Uint8Array(outLen[0])
+        resultBuf = new Uint8Array(Number(outLen[0]))
         res = library.symbols.pcre2_substitute_8(
             code,
             subjectBuf,
-            subjectBuf.byteLength,
-            0,
+            BigInt(subjectBuf.byteLength),
+            0n,
             flags,
             null,
             null,
             replacementBuf,
-            replacementBuf.byteLength,
+            BigInt(replacementBuf.byteLength),
             resultBuf,
             outLenPtr,
         )
@@ -354,7 +354,7 @@ export function substitute(
         throw new Error(`PCRE2 error: ${PCRE2_ERRORS[res] || res}`)
     }
 
-    return new TextDecoder().decode(resultBuf.slice(0, outLen[0]))
+    return new TextDecoder().decode(resultBuf.slice(0, Number(outLen[0])))
 }
 
 export function free(code: Deno.PointerValue): void {
