@@ -104,7 +104,7 @@ export function processExpressions(
         }
 
         try {
-            newText = substitute(compiled, text, expr.replacement, expr.global)
+            newText = substitute(compiled, newText, expr.replacement, expr.global)
         } catch (e) {
             free(compiled)
             throw new ExpressionError(expr, 'substitute', e.message)
