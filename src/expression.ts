@@ -1,3 +1,4 @@
+import { unknownToError } from "@fuman/utils";
 import { compile, free, substitute } from './bindings.ts'
 
 interface Expression {
@@ -100,14 +101,14 @@ export function processExpressions(
         try {
             compiled = compile(expr.pattern, expr.flags)
         } catch (e) {
-            throw new ExpressionError(expr, 'compile', e.message)
+            throw new ExpressionError(expr, 'compile', unknownToError(e).message)
         }
 
         try {
             newText = substitute(compiled, newText, expr.replacement, expr.global)
         } catch (e) {
             free(compiled)
-            throw new ExpressionError(expr, 'substitute', e.message)
+            throw new ExpressionError(expr, 'substitute', unknownToError(e).message)
         }
 
         free(compiled)

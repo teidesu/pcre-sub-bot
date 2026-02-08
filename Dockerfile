@@ -1,9 +1,9 @@
-FROM denoland/deno:alpine-1.45.0@sha256:dd724c13cefa1a6ca84f62391998c44553b1b2d423b1747218696a00a16ab25a
+FROM denoland/deno:2.6.8
 
 WORKDIR /app
 
-RUN apk add pcre2 sqlite-dev
-
+RUN apt update && apt install -y libpcre2-dev && apt clean && rm -rf /var/lib/apt/lists/*
+RUN ln -s /usr/lib/$(uname -m)-linux-gnu/libpcre2-8.so.0 /usr/lib/libpcre2-8.so.0
 USER deno
 
 
@@ -13,6 +13,6 @@ COPY deno.json deno.lock /app/
 RUN deno cache src/main.ts
 
 ENV PCRE2_LIB=/usr/lib/libpcre2-8.so.0
-ENV DENO_SQLITE_PATH=/usr/lib/libsqlite3.so
+ENV ENV=production
 
 CMD ["run", "--lock=deno.lock", "--cached-only", "-A", "--unstable-ffi", "src/main.ts"]

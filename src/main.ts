@@ -3,13 +3,14 @@ import { BotKeyboard, TelegramClient } from '@mtcute/deno'
 
 import { findExpressionsInMessage, processExpressions } from './expression.ts'
 import * as env from './env.ts'
+import { unknownToError } from "@fuman/utils"
 
 const tg = new TelegramClient({
     apiId: env.API_ID,
     apiHash: env.API_HASH,
     storage: 'bot-data/session',
     updates: {
-        catchUp: true,
+        catchUp: env.IS_PRODUCTION,
     }
 })
 
@@ -29,7 +30,7 @@ dp.onNewMessage(filters.reply, async (msg) => {
     try {
         newText = processExpressions(repliedMsg.text, exprs)
     } catch (e) {
-        await msg.replyText(e.message, {
+        await msg.replyText(unknownToError(e).message, {
             replyMarkup: BotKeyboard.inline([
                 [
                     BotKeyboard.callback(
