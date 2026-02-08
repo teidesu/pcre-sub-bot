@@ -42,14 +42,3 @@ jobs:
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: publish
-    steps:
-      - uses: teidesu/desu-deploy@main
-        with:
-          key: ${{ secrets.DEPLOY_KEY }}
-          server: ${{ secrets.DEPLOY_SERVER }}
-          wireguard: ${{ secrets.DEPLOY_WG }}
-          service: pcre-sub-bot
