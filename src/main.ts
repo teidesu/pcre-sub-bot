@@ -1,5 +1,5 @@
 import { CallbackDataBuilder, Dispatcher, filters } from '@mtcute/dispatcher'
-import { BotKeyboard, TelegramClient } from '@mtcute/deno'
+import { BotKeyboard, proxyTransportFromUrl, TcpTransport, TelegramClient } from '@mtcute/deno'
 
 import { findExpressionsInMessage, processExpressions } from './expression.ts'
 import * as env from './env.ts'
@@ -8,6 +8,7 @@ import { unknownToError } from "@fuman/utils"
 const tg = new TelegramClient({
     apiId: env.API_ID,
     apiHash: env.API_HASH,
+    transport: env.HTTP_PROXY ? proxyTransportFromUrl(env.HTTP_PROXY) : new TcpTransport(),
     storage: 'bot-data/session',
     updates: {
         catchUp: env.IS_PRODUCTION,

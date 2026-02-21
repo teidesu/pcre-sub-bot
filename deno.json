@@ -2,8 +2,8 @@
     "imports": {
         "@std/dotenv": "jsr:@std/dotenv@^0.224.2",
         "@std/assert": "jsr:@std/assert@^1.0.18",
-        "@mtcute/deno": "jsr:@mtcute/deno@^0.27.8",
-        "@mtcute/dispatcher": "jsr:@mtcute/dispatcher@^0.27.8",
+        "@mtcute/deno": "jsr:@mtcute/deno@^0.28.0",
+        "@mtcute/dispatcher": "jsr:@mtcute/dispatcher@^0.28.0",
         "@fuman/utils": "jsr:@fuman/utils@^0.0.19"
     },
     "tasks": {

@@ -6,16 +6,16 @@
     "jsr:@fuman/net@0.0.19": "0.0.19",
     "jsr:@fuman/net@^0.0.19": "0.0.19",
     "jsr:@fuman/utils@^0.0.19": "0.0.19",
-    "jsr:@mtcute/core@~0.27.8": "0.27.8",
-    "jsr:@mtcute/deno@~0.27.8": "0.27.8",
-    "jsr:@mtcute/dispatcher@~0.27.8": "0.27.8",
+    "jsr:@mtcute/core@0.28": "0.28.0",
+    "jsr:@mtcute/deno@0.28": "0.28.0",
+    "jsr:@mtcute/dispatcher@0.28": "0.28.0",
     "jsr:@mtcute/file-id@~0.27.8": "0.27.8",
-    "jsr:@mtcute/html-parser@~0.27.8": "0.27.8",
-    "jsr:@mtcute/markdown-parser@~0.27.8": "0.27.8",
+    "jsr:@mtcute/html-parser@0.28": "0.28.0",
+    "jsr:@mtcute/markdown-parser@0.28": "0.28.0",
     "jsr:@mtcute/tl-runtime@~0.24.3": "0.24.3",
-    "jsr:@mtcute/tl@221": "221.0.0",
+    "jsr:@mtcute/tl@222": "222.0.0",
     "jsr:@mtcute/wasm@~0.27.8": "0.27.8",
-    "jsr:@std/assert@^1.0.18": "1.0.18",
+    "jsr:@std/assert@^1.0.18": "1.0.19",
     "jsr:@std/dotenv@~0.224.2": "0.224.2",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/io@0.223.0": "0.223.0",
@@ -50,8 +50,8 @@
     "@fuman/utils@0.0.19": {
       "integrity": "f2ec12d7643275a36db86dd5f2779a2f9f8f23e3d7cbb78aa4a7cb6657622977"
     },
-    "@mtcute/core@0.27.8": {
-      "integrity": "197f8b1308d929841c1041b8c49927dfdb6ab9a6a2fa365bd33739f4bdd59fe3",
+    "@mtcute/core@0.28.0": {
+      "integrity": "72698f893c489a5d4a1b87b3ced2e5903b160ba057db1193e1b3ac3986b537ec",
       "dependencies": [
         "jsr:@mtcute/file-id",
         "jsr:@mtcute/tl",
@@ -62,8 +62,8 @@
         "npm:long"
       ]
     },
-    "@mtcute/deno@0.27.8": {
-      "integrity": "3b003ca6737be4b1be2933782fe0fe6cb6a5550788407a1492159d57ad19c58e",
+    "@mtcute/deno@0.28.0": {
+      "integrity": "787364cc2be6a179974caeb828d6ba8bd0ccdcd9b724123173d6cc5ecd8a5e0a",
       "dependencies": [
         "jsr:@fuman/deno",
         "jsr:@fuman/net@0.0.19",
@@ -74,8 +74,8 @@
         "jsr:@std/io"
       ]
     },
-    "@mtcute/dispatcher@0.27.8": {
-      "integrity": "ac2d85fb2cb1efc56af6210dbb7c28af57afb42e501f479447aec40778af694f",
+    "@mtcute/dispatcher@0.28.0": {
+      "integrity": "57e1154d24e52228adb79db5d7800fe212fcc01580db008ea6b8d43a587acb3a",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:@fuman/utils@0.0.19"
@@ -89,23 +89,23 @@
         "npm:long"
       ]
     },
-    "@mtcute/html-parser@0.27.8": {
-      "integrity": "364d7e8e58b985f3bde2db31b0b3a11d9bcc3b530850759f0af0904e7b0be284",
+    "@mtcute/html-parser@0.28.0": {
+      "integrity": "bddd8f1838766fe2e0f18114e570caf2f91e9418edf61df9bf0fc245a3065e7b",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:htmlparser2",
         "npm:long"
       ]
     },
-    "@mtcute/markdown-parser@0.27.8": {
-      "integrity": "0851afdcdd3f68168c94e11eab43b2a09f08423951758a140f7872ef0d8d18b1",
+    "@mtcute/markdown-parser@0.28.0": {
+      "integrity": "0d95be3cb0a568fe937edd6c1717f90621dd0fbea74636b4d0a762bd06533e31",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:long"
       ]
     },
-    "@mtcute/tl@221.0.0": {
-      "integrity": "0b29f36ad256152eb265ebb9d2cd6177935ec43fa51aee7a2824f1783d6f4fa3",
+    "@mtcute/tl@222.0.0": {
+      "integrity": "be4658f39a9dddecb6e61fb18b68efa6c40ecf94ac39022d76e8d267a0638117",
       "dependencies": [
         "npm:long"
       ]
@@ -122,6 +122,12 @@
     },
     "@std/assert@1.0.18": {
       "integrity": "270245e9c2c13b446286de475131dc688ca9abcd94fc5db41d43a219b34d1c78",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/assert@1.0.19": {
+      "integrity": "eaada96ee120cb980bc47e040f82814d786fe8162ecc53c91d8df60b8755991e",
       "dependencies": [
         "jsr:@std/internal"
       ]
@@ -203,8 +209,8 @@
   "workspace": {
     "dependencies": [
       "jsr:@fuman/utils@^0.0.19",
-      "jsr:@mtcute/deno@~0.27.8",
-      "jsr:@mtcute/dispatcher@~0.27.8",
+      "jsr:@mtcute/deno@0.28",
+      "jsr:@mtcute/dispatcher@0.28",
       "jsr:@std/assert@^1.0.18",
       "jsr:@std/dotenv@~0.224.2"
     ]

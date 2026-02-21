@@ -6,6 +6,7 @@ const BOT_TOKEN = Deno.env.get('BOT_TOKEN')!
 const PCRE2_LIB = Deno.env.get('PCRE2_LIB')!
 
 export const IS_PRODUCTION = Deno.env.get('ENV') === 'production'
+export const HTTP_PROXY = Deno.env.get('http_proxy')
 
 if (Number.isNaN(API_ID) || !API_HASH) {
     throw new Error('API_ID or API_HASH not set!')
