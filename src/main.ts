@@ -1,7 +1,7 @@
 import { CallbackDataBuilder, Dispatcher, filters } from '@mtcute/dispatcher'
 import { BotInlineMessage, BotKeyboard, proxyTransportFromUrl, TcpTransport, TelegramClient } from '@mtcute/deno'
 
-import { findExpressionsInMessage, processExpressions } from './expression.ts'
+import { findExpressionsInMessage, processExpressionsWithMessage } from './expression.ts'
 import * as env from './env.ts'
 import { unknownToError } from "@fuman/utils"
 
@@ -29,7 +29,7 @@ dp.onNewMessage(filters.reply, async (msg) => {
 
     let newText
     try {
-        newText = processExpressions(repliedMsg.text, exprs)
+        newText = processExpressionsWithMessage(repliedMsg.text, msg.replyToMessage, exprs)
     } catch (e) {
         await msg.replyText(unknownToError(e).message, {
             replyMarkup: BotKeyboard.inline([
@@ -66,7 +66,7 @@ dp.onBotGuestChatQuery(async (ctx) => {
 
     let newText
     try {
-        newText = processExpressions(ctx.replyToMessage.text, exprs)
+        newText = processExpressionsWithMessage(ctx.replyToMessage.text, ctx.message.replyToMessage!, exprs)
     } catch (e) {
         await ctx.answer(BotInlineMessage.text(unknownToError(e).message))
 

@@ -1,5 +1,6 @@
 import { unknownToError } from "@fuman/utils";
 import { compile, free, substitute } from './bindings.ts'
+import { RepliedMessageInfo } from "@mtcute/deno";
 
 interface Expression {
     pattern: string
@@ -115,4 +116,25 @@ export function processExpressions(
     }
 
     return newText
+}
+
+export function processExpressionsWithMessage(
+    fullText: string,
+    replyTo: RepliedMessageInfo,
+    expressions: Expression[],
+): string {
+    if (!replyTo.isQuote) {
+        return processExpressions(fullText, expressions)
+    }
+
+    // apply expressions to just the quoted slice, then splices it back into the full text
+    const start = replyTo.quoteOffset ?? fullText.indexOf(replyTo.quoteText)
+    if (start === null) {
+        // can't reconcile (message edited past recognition) — return just the substituted quote
+        return processExpressions(replyTo.quoteText, expressions)
+    }
+
+    const before = fullText.slice(0, start)
+    const after = fullText.slice(start + replyTo.quoteText.length)
+    return before + processExpressions(replyTo.quoteText, expressions) + after
 }

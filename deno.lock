@@ -28,6 +28,7 @@
     "@fuman/deno@0.0.19": {
       "integrity": "a60f53c28e080cf2ca94cf01338062a857c02d766508ab95fd6ee7a86ceff317",
       "dependencies": [
+        "jsr:@fuman/io@^0.0.19",
         "jsr:@fuman/net@^0.0.19"
       ]
     },
@@ -81,7 +82,8 @@
       "integrity": "400e48b7a56c95541b2388d433caa72a47301c117e2682195029196ec90c2587",
       "dependencies": [
         "jsr:@mtcute/tl-runtime",
-        "npm:@fuman/utils@0.0.19"
+        "npm:@fuman/utils@0.0.19",
+        "npm:long"
       ]
     },
     "@mtcute/html-parser@0.29.7": {
