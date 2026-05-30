@@ -6,31 +6,28 @@
     "jsr:@fuman/net@0.0.19": "0.0.19",
     "jsr:@fuman/net@^0.0.19": "0.0.19",
     "jsr:@fuman/utils@^0.0.19": "0.0.19",
-    "jsr:@mtcute/core@0.28": "0.28.0",
-    "jsr:@mtcute/deno@0.28": "0.28.0",
-    "jsr:@mtcute/dispatcher@0.28": "0.28.0",
-    "jsr:@mtcute/file-id@~0.27.8": "0.27.8",
-    "jsr:@mtcute/html-parser@0.28": "0.28.0",
-    "jsr:@mtcute/markdown-parser@0.28": "0.28.0",
-    "jsr:@mtcute/tl-runtime@~0.24.3": "0.24.3",
-    "jsr:@mtcute/tl@222": "222.0.0",
-    "jsr:@mtcute/wasm@~0.27.8": "0.27.8",
+    "jsr:@mtcute/core@~0.29.7": "0.29.7",
+    "jsr:@mtcute/deno@~0.29.7": "0.29.7",
+    "jsr:@mtcute/dispatcher@~0.29.7": "0.29.7",
+    "jsr:@mtcute/file-id@0.29": "0.29.0",
+    "jsr:@mtcute/html-parser@~0.29.7": "0.29.7",
+    "jsr:@mtcute/markdown-parser@~0.29.7": "0.29.7",
+    "jsr:@mtcute/tl-runtime@0.29": "0.29.0",
+    "jsr:@mtcute/wasm@0.29": "0.29.0",
     "jsr:@std/assert@^1.0.18": "1.0.19",
     "jsr:@std/dotenv@~0.224.2": "0.224.2",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/io@0.223.0": "0.223.0",
     "npm:@fuman/io@0.0.19": "0.0.19",
     "npm:@fuman/net@0.0.19": "0.0.19",
-    "npm:@fuman/utils@0.0.15": "0.0.15",
     "npm:@fuman/utils@0.0.19": "0.0.19",
     "npm:htmlparser2@10": "10.1.0",
-    "npm:long@5.2.3": "5.2.3"
+    "npm:long@^5.3.2": "5.3.2"
   },
   "jsr": {
     "@fuman/deno@0.0.19": {
       "integrity": "a60f53c28e080cf2ca94cf01338062a857c02d766508ab95fd6ee7a86ceff317",
       "dependencies": [
-        "jsr:@fuman/io@^0.0.19",
         "jsr:@fuman/net@^0.0.19"
       ]
     },
@@ -50,11 +47,10 @@
     "@fuman/utils@0.0.19": {
       "integrity": "f2ec12d7643275a36db86dd5f2779a2f9f8f23e3d7cbb78aa4a7cb6657622977"
     },
-    "@mtcute/core@0.28.0": {
-      "integrity": "72698f893c489a5d4a1b87b3ced2e5903b160ba057db1193e1b3ac3986b537ec",
+    "@mtcute/core@0.29.7": {
+      "integrity": "fdd7f4e1ab06926bec05e36e95bba5393538fbc8f9ecfaae43fbb884318dfc1c",
       "dependencies": [
         "jsr:@mtcute/file-id",
-        "jsr:@mtcute/tl",
         "jsr:@mtcute/tl-runtime",
         "npm:@fuman/io@0.0.19",
         "npm:@fuman/net@0.0.19",
@@ -62,8 +58,8 @@
         "npm:long"
       ]
     },
-    "@mtcute/deno@0.28.0": {
-      "integrity": "787364cc2be6a179974caeb828d6ba8bd0ccdcd9b724123173d6cc5ecd8a5e0a",
+    "@mtcute/deno@0.29.7": {
+      "integrity": "3c69d80818fa5de0ba2e6e8def063e442d5390daca9236325feca6b653e8d478",
       "dependencies": [
         "jsr:@fuman/deno",
         "jsr:@fuman/net@0.0.19",
@@ -74,51 +70,44 @@
         "jsr:@std/io"
       ]
     },
-    "@mtcute/dispatcher@0.28.0": {
-      "integrity": "57e1154d24e52228adb79db5d7800fe212fcc01580db008ea6b8d43a587acb3a",
+    "@mtcute/dispatcher@0.29.7": {
+      "integrity": "c17f371e7a9146fa2f611fa84c893df2fcd3d58f28139cb9ba79c6735f0eee92",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:@fuman/utils@0.0.19"
       ]
     },
-    "@mtcute/file-id@0.27.8": {
-      "integrity": "fc8a09d3d767c5f74f59ef2f64db6257d40b448358cc03bbbdab0d312636ff95",
+    "@mtcute/file-id@0.29.0": {
+      "integrity": "400e48b7a56c95541b2388d433caa72a47301c117e2682195029196ec90c2587",
       "dependencies": [
         "jsr:@mtcute/tl-runtime",
-        "npm:@fuman/utils@0.0.19",
-        "npm:long"
+        "npm:@fuman/utils@0.0.19"
       ]
     },
-    "@mtcute/html-parser@0.28.0": {
-      "integrity": "bddd8f1838766fe2e0f18114e570caf2f91e9418edf61df9bf0fc245a3065e7b",
+    "@mtcute/html-parser@0.29.7": {
+      "integrity": "5c57e81bacd3b1d7cf4735a3381d89b68e12daa2e1c97118ac780964fe018c96",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:htmlparser2",
         "npm:long"
       ]
     },
-    "@mtcute/markdown-parser@0.28.0": {
-      "integrity": "0d95be3cb0a568fe937edd6c1717f90621dd0fbea74636b4d0a762bd06533e31",
+    "@mtcute/markdown-parser@0.29.7": {
+      "integrity": "c8f8c941a14265142f56f87930bb3f23f3a60ba2021bab1090f1e9dc5cd1e768",
       "dependencies": [
         "jsr:@mtcute/core",
         "npm:long"
       ]
     },
-    "@mtcute/tl@222.0.0": {
-      "integrity": "be4658f39a9dddecb6e61fb18b68efa6c40ecf94ac39022d76e8d267a0638117",
+    "@mtcute/tl-runtime@0.29.0": {
+      "integrity": "333bfd59bce512fda8f233a8dfd62f1d05711a0016c3a64b31c41b271e077c2e",
       "dependencies": [
+        "npm:@fuman/utils@0.0.19",
         "npm:long"
       ]
     },
-    "@mtcute/tl-runtime@0.24.3": {
-      "integrity": "e012b3c07983850448670733d3fe6c86e262a2f8b9804113133579f3f3a8f294",
-      "dependencies": [
-        "npm:@fuman/utils@0.0.15",
-        "npm:long"
-      ]
-    },
-    "@mtcute/wasm@0.27.8": {
-      "integrity": "76e8b5f4cf48083b230395c7ec33cd734a3993abf9830771f453f06155ac4f1a"
+    "@mtcute/wasm@0.29.0": {
+      "integrity": "53ec88d568b2110713775da0cfc705843ffa25bf2eb4e9bb4c603a7cf039a385"
     },
     "@std/assert@1.0.18": {
       "integrity": "270245e9c2c13b446286de475131dc688ca9abcd94fc5db41d43a219b34d1c78",
@@ -146,18 +135,15 @@
     "@fuman/io@0.0.19": {
       "integrity": "sha512-B+2n3GVa9PCYMJ9xfsdXUlUV9yXO4gKLYfxm815PeJ+MGOw5TbEp166drRmBq1AtxVnP0efy6Oz9rYpKVODgow==",
       "dependencies": [
-        "@fuman/utils@0.0.19"
+        "@fuman/utils"
       ]
     },
     "@fuman/net@0.0.19": {
       "integrity": "sha512-yISM+JcZEWBpBYn0v2mUY/Zst4SsicTRaVTvRkVhMiZhgMzdXalfvRwRV/vsgwwL31bntwowCTDW4iilCJLbXg==",
       "dependencies": [
         "@fuman/io",
-        "@fuman/utils@0.0.19"
+        "@fuman/utils"
       ]
-    },
-    "@fuman/utils@0.0.15": {
-      "integrity": "sha512-3H3WzkfG7iLKCa/yNV4s80lYD4yr5hgiNzU13ysLY2BcDqFjM08XGYuLd5wFVp4V8+DA/fe8gIDW96To/JwDyA=="
     },
     "@fuman/utils@0.0.19": {
       "integrity": "sha512-4qVrZ9AjKYztLJsNr1Tp7kL48b22dvVLN1iVW+Me8ZSQ0ILN0qknoxjsczVPReF7+GDWgknNxR2l6ggrA4SZyw=="
@@ -202,15 +188,15 @@
         "entities@7.0.1"
       ]
     },
-    "long@5.2.3": {
-      "integrity": "sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q=="
+    "long@5.3.2": {
+      "integrity": "sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA=="
     }
   },
   "workspace": {
     "dependencies": [
       "jsr:@fuman/utils@^0.0.19",
-      "jsr:@mtcute/deno@0.28",
-      "jsr:@mtcute/dispatcher@0.28",
+      "jsr:@mtcute/deno@~0.29.7",
+      "jsr:@mtcute/dispatcher@~0.29.7",
       "jsr:@std/assert@^1.0.18",
       "jsr:@std/dotenv@~0.224.2"
     ]

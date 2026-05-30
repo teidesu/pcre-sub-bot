@@ -1,5 +1,5 @@
 import { CallbackDataBuilder, Dispatcher, filters } from '@mtcute/dispatcher'
-import { BotKeyboard, proxyTransportFromUrl, TcpTransport, TelegramClient } from '@mtcute/deno'
+import { BotInlineMessage, BotKeyboard, proxyTransportFromUrl, TcpTransport, TelegramClient } from '@mtcute/deno'
 
 import { findExpressionsInMessage, processExpressions } from './expression.ts'
 import * as env from './env.ts'
@@ -48,6 +48,32 @@ dp.onNewMessage(filters.reply, async (msg) => {
     }
 
     await tg.replyText(repliedMsg, newText)
+})
+
+dp.onBotGuestChatQuery(async (ctx) => {
+    if (!ctx.replyToMessage) return
+
+    let text = ctx.message.text
+    const myUsername = tg.storage.self.getCached(true)?.usernames[0]
+    if (myUsername) {
+        text = text.replace('@' + myUsername, '').trim()
+    }
+
+    const exprs = findExpressionsInMessage(text)
+    if (exprs.length === 0) {
+        return
+    }
+
+    let newText
+    try {
+        newText = processExpressions(ctx.replyToMessage.text, exprs)
+    } catch (e) {
+        await ctx.answer(BotInlineMessage.text(unknownToError(e).message))
+
+        return
+    }
+
+    await ctx.answer(BotInlineMessage.text(newText))
 })
 
 dp.onCallbackQuery(DeleteError.filter(), async (upd) => {
